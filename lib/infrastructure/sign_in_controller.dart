@@ -1,5 +1,6 @@
 import 'package:final_project/infrastructure/database.dart';
 import 'package:final_project/screens/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,8 +35,9 @@ class SignInController extends ChangeNotifier {
   }
 
   Future<void> signIn(BuildContext context) async {
-    if (email!.text == await getEmail() &&
-        password!.text == await getPassword()) {
+    try {
+      await Database.auth.signInWithEmailAndPassword(
+          email: email!.text, password: password!.text);
       Fluttertoast.showToast(
           msg: "Sign In Successfully",
           backgroundColor: MyColors.green,
@@ -44,16 +46,9 @@ class SignInController extends ChangeNotifier {
           gravity: ToastGravity.BOTTOM);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));
-    } else if (email!.text != await getEmail()) {
+    } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(
-          msg: "Invalid Email",
-          backgroundColor: MyColors.green,
-          fontSize: 15,
-          textColor: MyColors.grey,
-          gravity: ToastGravity.BOTTOM);
-    } else if (password!.text != await getPassword()) {
-      Fluttertoast.showToast(
-          msg: "Wrong Password",
+          msg: e.code.toString().toUpperCase(),
           backgroundColor: MyColors.green,
           fontSize: 15,
           textColor: MyColors.grey,

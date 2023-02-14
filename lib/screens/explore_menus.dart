@@ -252,7 +252,14 @@ class ExploreMenus extends ConsumerWidget {
                 itemBuilder: (context, index) => Padding(
                   padding: EdgeInsets.only(top: 20, bottom: 10),
                   child: InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      /*
+                      await ref.read(ordersProvider).addMenu(
+                          MenuData.price[index],
+                          MenuData.name[index],
+                          MenuData.secondName[index],
+                          MenuData.imgFile[index]);
+                           */
                       CartData.img.add(MenuData.img[index]);
                       CartData.name.add(MenuData.name[index]);
                       CartData.secondName.add(MenuData.secondName[index]);
