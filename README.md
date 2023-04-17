@@ -1,6 +1,6 @@
-# final_project
+# Food App
 
-A new Flutter project.
+A New Food Application for Android made with Flutter and Firebase Cloud Firestore.
 
 ## Getting Started
 
